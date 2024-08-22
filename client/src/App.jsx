@@ -7,7 +7,6 @@ const App = () => {
   const [showTable, setShowTable] = useState(false);
 
   const handleSubmit = (formData) => {
-    console.log(formData);
     setData(formData);
     setShowTable(true);
   };
