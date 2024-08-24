@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <>
-      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-10 bg-slate-100 px-5 py-10 text-slate-900 lg:flex-row dark:bg-slate-900 dark:text-slate-100">
+      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-10 bg-slate-100 px-5 py-10 text-slate-800 lg:flex-row dark:bg-slate-900 dark:text-slate-200">
         <div className="flex flex-col items-center justify-center md:w-[50%]">
           <h1 className="text-3xl font-bold uppercase">Credit Simulator</h1>
           <Form onSubmit={handleSubmit} />

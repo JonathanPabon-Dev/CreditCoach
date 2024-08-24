@@ -8,6 +8,12 @@ const Table = ({
   managementFee = 0,
 }) => {
   const [report, setReport] = useState([]);
+  const [totalValues, setTotalValues] = useState({
+    MonthlyFee: 0,
+    InterestFee: 0,
+    ManageFee: 0,
+    TotalFee: 0,
+  });
 
   useEffect(() => {
     const reportData = [];
@@ -17,12 +23,22 @@ const Table = ({
     const manageFee = managementFee;
     let totalFee;
 
+    let totalInterest = 0;
+    let totalMonthlyFee = 0;
+    let totalManageFee = 0;
+    let totalTotalFee = 0;
+
     for (let i = 0; i < months; i++) {
       const month = i + 1;
 
       interestFee = balance * (interest / 100);
       totalFee = monthlyFee + interestFee + manageFee;
       balance = balance - monthlyFee;
+
+      totalInterest += interestFee;
+      totalMonthlyFee += monthlyFee;
+      totalManageFee += manageFee;
+      totalTotalFee += totalFee;
 
       reportData.push({
         month,
@@ -34,6 +50,12 @@ const Table = ({
       });
     }
 
+    setTotalValues({
+      MonthlyFee: totalMonthlyFee,
+      InterestFee: totalInterest,
+      ManageFee: totalManageFee,
+      TotalFee: totalTotalFee,
+    });
     setReport(reportData);
   }, [loanAmount, months, interest, managementFee]);
 
@@ -79,7 +101,7 @@ const Table = ({
                   })}
                 </td>
               )}
-              <td className="bg-slate-800 px-5">
+              <td className="bg-slate-200 dark:bg-slate-800 px-5">
                 ${" "}
                 {parseFloat(row.totalFee).toLocaleString("en-US", {
                   minimumFractionDigits: 2,
@@ -96,6 +118,30 @@ const Table = ({
             </tr>
           ))}
         </tbody>
+        <tfoot className="text-center font-semibold">
+          <tr>
+            <td className="px-2 pb-2">Totals</td>
+            <td className="px-2 pb-2">${" "}{parseFloat(totalValues.MonthlyFee).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</td>
+            <td className="px-2 pb-2">${" "}{parseFloat(totalValues.InterestFee).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</td>
+            {managementFee !== 0 && (
+              <td className="px-2 pb-2">${" "}{parseFloat(totalValues.ManageFee).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</td>
+            )}
+            <td className="px-2 pb-2">${" "}{parseFloat(totalValues.TotalFee).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</td>
+            <td className="px-2 pb-2"></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

@@ -24,6 +24,9 @@ const Form = ({ onSubmit }) => {
 
   const handleManagementFeeChange = (e) => {
     setManagementFee(e.target.checked);
+    if (!e.target.checked) {
+      setManagementFeeValue("");
+    }
   };
 
   const handleManagementFeeValueChange = (e) => {
@@ -172,7 +175,7 @@ const Form = ({ onSubmit }) => {
 
         <button
           type="submit"
-          className="w-fit rounded-lg px-4 py-3 font-semibold uppercase dark:bg-slate-800 dark:hover:bg-slate-700"
+          className="w-fit rounded-lg px-4 py-3 font-semibold uppercase bg-slate-200 hover:bg-slate-300 transition-all duration-200 ease-in-out dark:bg-slate-800 dark:hover:bg-slate-700"
         >
           Calculate
         </button>
